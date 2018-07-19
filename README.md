@@ -1,2 +1,2 @@
 # JS_Snake_Game
-A Snake game made using HTML, CSS and vanilla JS.
+A self-made version of the classic snake game, created using Vanilla JavaScript, CSS and HTML.
