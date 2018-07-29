@@ -4,6 +4,7 @@ const cors = require('cors');
 const knex = require('knex');
 const update = require('./controllers/update');
 const neww = require('./controllers/new');
+const list = require('./controllers/retrieve');
 
 const db = knex({
   client: 'pg',
@@ -24,10 +25,11 @@ app.use(bodyParser.json());
 
 app.get('/', (req,res)=>{ res.send('it is working')})
 
+app.get('/retrieve', (req, res) => {list.retrieveScore(req, res, db)});
+
 app.post('/new', (req, res) => {neww.newScore(req, res, db)});
 
 app.put('/update', (req, res) => {update.updateScore(req, res, db)});
-
 
 const port = process.env.PORT || 3000;
 app.listen(port, ()=>{
