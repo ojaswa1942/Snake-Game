@@ -1,4 +1,4 @@
-* {
+ * {
   /* removing pre-existing margins and paddings so that we can assign what is necessary  */
   margin: 0;
   padding: 0;
@@ -166,11 +166,13 @@ header #heading {
 
 #footer #score {
   display: flex;
+  align-items: center;
   align-content: center;
+  justify-content: center;
   height: auto;
   margin: -2rem 0 0 0;
   flex-basis: 33%;
   color: rgb(176, 154, 245);
-  font-size: 3.5rem;
+  font-size: 2.7rem;
   text-align: center;
 }

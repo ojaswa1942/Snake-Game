@@ -12,11 +12,13 @@ const headerHeight = document.querySelector("header").offsetHeight;
 const footer = document.querySelector("footer");
 const footerHeight = document.querySelector("footer").offsetHeight;
 const dispScore = document.getElementById("score");
+let gameover = false;
 
 // creating a const with canvas elements (snake and apple) dimensions so it can be altered easily without affecting code.
 const canvasElementsDim = 30;
 let id = 0,
   score = 1,
+  localHighScore = 1,
   direction = "",
   pending = 0,
   bodyPositions = [];
@@ -64,7 +66,7 @@ const setDisplay = () => {
     footerHeight) /
     2}px`;
 
-  dispScore.innerHTML = `Score: ${score}`;
+  dispScore.innerHTML = `Score: ${score} Highscore: ${localHighScore}`;
 };
 
 //Dividing the canvas into pseudo grids.
@@ -138,12 +140,13 @@ const reset = () => {
   score = 1;
   direction = "";
   pending = 0;
+  gameover = false;
   bodyPositions = [];
   currentPos.snakeX = "";
   currentPos.snakeY = "";
   currentPos.appleX = "";
   currentPos.appleY = "";
-  dispScore.innerHTML = `Score: ${score}`;
+  dispScore.innerHTML = `Score: ${score} Highscore: ${localHighScore}`;
 };
 
 //Triggers for initiation and restart
@@ -153,6 +156,7 @@ const play = () => {
     clearInterval(id);
     reset();
   }
+  reset();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   generateSnakeHead();
   generateApple();
@@ -161,7 +165,7 @@ const play = () => {
 
 // Runs if the user clicks on the Play Again button in the end Popup.
 const restartFunc = () => {
-  reset();
+  // gameover = false;
   play();
   hideEndPopup();
 };
@@ -169,6 +173,7 @@ const restartFunc = () => {
 //After collision conditione or escape
 const gameOverRun = () => {
   clearInterval(id);
+  gameover = true;
   id = 0;
   speed.x = 0;
   speed.y = 0;
@@ -217,8 +222,10 @@ const checkAndUpdatePositions = () => {
 
 const updateScore = () => {
   score += 5;
+  if(score>localHighScore)
+    localHighScore = score;
   pending += 5;
-  dispScore.innerHTML = `Score: ${score}`;
+  dispScore.innerHTML = `Score: ${score} Highscore: ${localHighScore}`;
 };
 
 //First should follow head, rest should follow the next.
@@ -323,23 +330,25 @@ restartGame.addEventListener("click", restartFunc);
 endGame.addEventListener("click", hideEndPopup);
 
 document.addEventListener("keydown", event => {
-  let key = event.which || event.keyCode;
-  switch (key) {
-    case 37:
-      moveLeft();
-      break;
-    case 38:
-      moveUp();
-      break;
-    case 39:
-      moveRight();
-      break;
-    case 40:
-      moveDown();
-      break;
-    case 27:
-      gameOverRun();
-      break;
+  if(!gameover){
+    let key = event.which || event.keyCode;
+    switch (key) {
+      case 37:
+        moveLeft();
+        break;
+      case 38:
+        moveUp();
+        break;
+      case 39:
+        moveRight();
+        break;
+      case 40:
+        moveDown();
+        break;
+      case 27:
+        gameOverRun();
+        break;
+    }
   }
 });
 
