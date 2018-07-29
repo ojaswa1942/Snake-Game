@@ -2,6 +2,8 @@ const express=require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const knex = require('knex');
+const update = require('./controllers/update');
+const neww = require('./controllers/new');
 
 const db = knex({
   client: 'pg',
@@ -22,41 +24,9 @@ app.use(bodyParser.json());
 
 app.get('/', (req,res)=>{ res.send('it is working')})
 
-app.post('/new', (req, res) => {
-  const {email, score} = req.body;
-  if(!email || !score){
-    return res.status(400).json('Incorrect Submission');
-  }
+app.post('/new', (req, res) => {neww.newScore(req, res, db)});
 
-  db.insert({
-    email: email,
-    score: score
-  })
-    .into('score')
-    .then(data => {
-      res.status(200).json("Entry success");
-    })
-    .catch(err => res.status(400).json('Something is wrong '+err));
-})
-
-app.put('/update', (req, res) =>{
-  const {email, score} = req.body;
-  if(!email || !score){
-    return res.status(400).json('Incorrect Submission');
-  }
-
-  db('score')
-    .where({email})
-    .update({score})
-    .returning('score')
-    .then(score => {
-      if(score)
-        res.json(score);
-      else
-        res.json('No such entry');
-    })
-    .catch(err => res.status(400).json('Error '+err));
-})
+app.put('/update', (req, res) => {update.updateScore(req, res, db)});
 
 
 const port = process.env.PORT || 3000;
