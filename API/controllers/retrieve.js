@@ -1,5 +1,5 @@
 const retrieveScore = (req, res, db) => {
-  db.select('*').from('score')
+  db.select('*').from('score').orderBy('score', 'desc')
   .then(list => {
     if(list.length)
         res.json(list);
