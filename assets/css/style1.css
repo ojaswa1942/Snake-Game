@@ -1,4 +1,4 @@
- * {
+  * {
   /* removing pre-existing margins and paddings so that we can assign what is necessary  */
   margin: 0;
   padding: 0;
@@ -35,7 +35,7 @@ html {
   line-height: 2.5rem;
   text-align: center;
   color: white;
-  background: black;
+  background: rgba(0, 0, 0, 0.9);
   padding: 1rem 0 0 0;
   border-radius: 1rem;
   box-shadow: 0 0 1rem 0.05rem black;
@@ -82,7 +82,7 @@ html {
   line-height: 3rem;
   text-align: center;
   color: white;
-  background: black;
+  background: rgba(0, 0, 0, 0.9);
   padding: 1rem 0 0 0;
   border-radius: 1rem;
   box-shadow: 0 0 1rem 0.05rem black;
@@ -98,8 +98,41 @@ html {
   font-size: 1.5rem;
   text-align: center;
 }
+#scorepopup {
+  border: 1px solid black;
+  position: fixed;
+  display: none;
+  width: 60rem;
+  height: 15rem;
+  overflow: auto;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: 50vh 50vw;
+  transform: translate(-50%, -50%);
+  line-height: 3rem;
+  text-align: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.9);
+  padding: 1rem 0 0 0;
+  border-radius: 1rem;
+  box-shadow: 0 0 1rem 0.05rem black;
+}
 
+#scorepopup #scoreheading1 {
+  font-size: 2rem;
+  text-align: center;
+  text-decoration-line: underline;
+}
+
+#scorepopup .controls {
+  font-size: 1.5rem;
+  text-align: center;
+}
 #restartgame,
+#restartgame1,
 #endgame {
   font-size: 1.5rem;
   text-align: center;

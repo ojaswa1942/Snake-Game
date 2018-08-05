@@ -1,11 +1,13 @@
-const body = document.querySelector("body");
+ const body = document.querySelector("body");
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 const initialPopup = document.getElementById("infopopup");
 const startGameButton = document.getElementById("startgame");
 const endPopup = document.getElementById("replaypopup");
+const scorePopup = document.getElementById("scorepopup");
 const endPopupHeading = document.getElementById("scoreheading");
 const restartGame = document.getElementById("restartgame");
+const restartGame1 = document.getElementById("restartgame1");
 const endGame = document.getElementById("endgame");
 const header = document.querySelector("header");
 const headerHeight = document.querySelector("header").offsetHeight;
@@ -168,6 +170,7 @@ const restartFunc = () => {
   // gameover = false;
   play();
   hideEndPopup();
+  hideScorePopup();
 };
 
 //After collision conditione or escape
@@ -279,13 +282,22 @@ const hideInitialPopup = () => {
 };
 
 const showEndPopup = () => {
-  endPopupHeading.innerHTML = `You Scored: ${score}`;
+  endPopupHeading.innerHTML = `You scored: ${score}`;
   endPopup.style.display = "block";
 };
 
 const hideEndPopup = () => {
   endPopup.style.display = "none";
 };
+
+const showScorePopup = () => {
+  scorePopup.style.display = "block";
+  hideEndPopup();
+}
+
+const hideScorePopup = () => {
+  scorePopup.style.display = "none";
+}
 
 //Functions for movement
 const moveUp = () => {
@@ -327,7 +339,8 @@ window.addEventListener("keydown", hideInitialPopup);
 
 startGameButton.addEventListener("click", hideInitialPopup);
 restartGame.addEventListener("click", restartFunc);
-endGame.addEventListener("click", hideEndPopup);
+restartGame1.addEventListener("click", restartFunc);
+endGame.addEventListener("click", showScorePopup);
 
 document.addEventListener("keydown", event => {
   if(!gameover){
