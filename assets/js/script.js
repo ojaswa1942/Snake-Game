@@ -289,7 +289,7 @@ const showEndPopup = () => {
 const hideEndPopup = () => {
   endPopup.style.display = "none";
 };
-
+ 
 const showScorePopup = () => {
   scorePopup.style.display = "block";
   hideEndPopup();
@@ -365,3 +365,29 @@ document.addEventListener("keydown", event => {
   }
 });
 
+//For highscore
+let list = [];
+const enterScore = document.getElementById("enterscore");
+const table = document.getElementById("table");
+const error = document.getElementById("error");
+const field = document.getElementById("field");
+
+window.addEventListener('load', () => {
+  fetch('http://localhost:3000/retrieve')
+  .then(response => response.json())
+  .then(users => {
+    list = users;
+  })
+  .catch(console.log)
+})
+
+const checkAndUpdateScore = () => {
+  console.log("Check");
+  
+}
+
+enterScore.addEventListener('click', checkAndUpdateScore);
+field.addEventListener('keypress', (event) =>{
+  if(event.which === 13 || event.keyCode === 13)
+    checkAndUpdateScore();
+})

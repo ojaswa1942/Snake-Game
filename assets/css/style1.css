@@ -103,7 +103,7 @@ html {
   position: fixed;
   display: none;
   width: 60rem;
-  height: 15rem;
+  height: 30rem;
   overflow: auto;
   z-index: 2;
   left: 0;
@@ -122,15 +122,49 @@ html {
 }
 
 #scorepopup #scoreheading1 {
-  font-size: 2rem;
+  font-size: 2.2rem;
   text-align: center;
-  text-decoration-line: underline;
+  /*text-decoration-line: underline;*/
 }
 
 #scorepopup .controls {
   font-size: 1.5rem;
   text-align: center;
 }
+
+table{
+  font-size: 1.7rem;
+  display: table;
+  align-items: center;
+  align-content: center;
+  border: 1px solid white;
+  width: 90%;
+  overflow: auto;
+  border-collapse: collapse;
+}
+th, td{
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid white;
+}
+th{
+  /*font-size: 1.8rem;*/
+  text-decoration: underline;
+  border-bottom: 1px solid white;
+}
+
+td{
+
+}
+
+#field {
+  margin: 3px;
+}
+
+#enterscore{
+
+}
+
 #restartgame,
 #restartgame1,
 #endgame {
@@ -148,6 +182,12 @@ html {
 
 #endgame {
   background-color: red;
+}
+
+#error{
+  color: red;
+  font-size: 1.5rem;
+  display: none;
 }
 
 header #heading {
