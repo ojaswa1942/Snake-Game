@@ -12,7 +12,7 @@ const updateScore = (req, res, db) => {
       if(score)
         res.json(score);
       else
-        res.json('No such entry');
+        res.json(0);
     })
     .catch(err => res.status(400).json('Error '+err));	
 }

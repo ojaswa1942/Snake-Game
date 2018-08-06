@@ -35,7 +35,7 @@ html {
   line-height: 2.5rem;
   text-align: center;
   color: white;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.8);
   padding: 1rem 0 0 0;
   border-radius: 1rem;
   box-shadow: 0 0 1rem 0.05rem black;
@@ -82,7 +82,7 @@ html {
   line-height: 3rem;
   text-align: center;
   color: white;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.8);
   padding: 1rem 0 0 0;
   border-radius: 1rem;
   box-shadow: 0 0 1rem 0.05rem black;
@@ -103,7 +103,7 @@ html {
   position: fixed;
   display: none;
   width: 60rem;
-  height: 30rem;
+  height: 40rem;
   overflow: auto;
   z-index: 2;
   left: 0;
@@ -115,7 +115,7 @@ html {
   line-height: 3rem;
   text-align: center;
   color: white;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.8);
   padding: 1rem 0 0 0;
   border-radius: 1rem;
   box-shadow: 0 0 1rem 0.05rem black;
@@ -131,17 +131,53 @@ html {
   font-size: 1.5rem;
   text-align: center;
 }
-
 table{
+  width: 90%;
+  font-size: 1.7rem;
+  display: table;
+  border-collapse: collapse;
+}
+tbody td, thead th {
+  /*width: 47.76%;*/
+  width: 1%;
+}
+thead, tbody {
+  display: block;
+  width: 100%;
+}
+thead{
+  width: 98%;
+}
+
+tbody {
+  height: 23rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+/*table{
   font-size: 1.7rem;
   display: table;
   align-items: center;
   align-content: center;
   border: 1px solid white;
   width: 90%;
-  overflow: auto;
   border-collapse: collapse;
+  table-layout: fixed;
+  height: 25rem;
 }
+
+table.fixed_header thead tr {
+   display: block;
+   width: 100%;
+}
+table.fixed_header tbody{
+  display:block;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 23rem;
+}
+*/
 th, td{
   text-align: center;
   vertical-align: middle;
@@ -154,7 +190,6 @@ th{
 }
 
 td{
-
 }
 
 #field {

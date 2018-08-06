@@ -140,6 +140,8 @@ const generateApple = () => {
 const reset = () => {
   id = 0;
   score = 1;
+  addScore = 1;
+  field.value = "";
   direction = "";
   pending = 0;
   gameover = false;
@@ -169,6 +171,7 @@ const play = () => {
 const restartFunc = () => {
   // gameover = false;
   play();
+  hideError();
   hideEndPopup();
   hideScorePopup();
 };
@@ -296,6 +299,7 @@ const showScorePopup = () => {
 }
 
 const hideScorePopup = () => {
+
   scorePopup.style.display = "none";
 }
 
@@ -368,26 +372,123 @@ document.addEventListener("keydown", event => {
 //For highscore
 let list = [];
 const enterScore = document.getElementById("enterscore");
-const table = document.getElementById("table");
+const table = document.getElementById("tbody");
 const error = document.getElementById("error");
 const field = document.getElementById("field");
+let addScore = 1;
 
 window.addEventListener('load', () => {
-  fetch('http://localhost:3000/retrieve')
+  fetch('https://js-snakegame.herokuapp.com/retrieve')
   .then(response => response.json())
   .then(users => {
     list = users;
+    renderScore();
   })
   .catch(console.log)
 })
 
 const checkAndUpdateScore = () => {
-  console.log("Check");
-  
+  if(addScore){
+    hideError();
+    let test = 1;
+    list.forEach(entry => {
+      if(entry.email === field.value){
+        if(localHighScore > entry.score){
+          fetch('https://js-snakegame.herokuapp.com/update', {
+            method: 'put',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify({
+              email: field.value,
+              score: localHighScore
+            })
+          })
+          .then(response => response.json())
+          .then(response => {
+            if(response)
+            {
+             fetch('https://js-snakegame.herokuapp.com/retrieve')
+              .then(response => response.json())
+              .then(users => {
+                list = users;
+                renderScore();
+              })
+              .catch(console.log);
+            }
+          })
+          test = 0;  
+          addScore = 0;
+          localHighScore = 1;
+          return false;
+        }
+      }
+    })
+
+    if(test){
+      fetch('https://js-snakegame.herokuapp.com/new', {
+        method: 'post',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({
+          email: field.value,
+          score: localHighScore
+        })
+      })
+      .then(response => response.json())
+      .then(response => {
+        if(response)
+        {
+         fetch('https://js-snakegame.herokuapp.com/retrieve')
+          .then(response => response.json())
+          .then(users => {
+            list = users;
+            addScore = 0;
+            localHighScore = 1;
+            renderScore();
+          })
+          .catch(console.log)
+        }
+      }) 
+    }
+  }
+  else showError();
 }
 
-enterScore.addEventListener('click', checkAndUpdateScore);
-field.addEventListener('keypress', (event) =>{
-  if(event.which === 13 || event.keyCode === 13)
+const renderScore = () => {
+  table.innerHTML = ``;
+  list.forEach((user, i) => {
+    table.innerHTML +=
+      `
+      <tr>
+        <td>${i+1}</td>
+        <td>${user.email}</td>
+        <td>${user.score}</td>
+      </tr>
+      `;
+  })
+}
+
+const showError = () => {
+  error.style.display="block";
+}
+const hideError = () => {
+  error.style.display="none";
+}
+
+enterScore.addEventListener('click', () => {
+  if(field.value.length){
+    hideError();
     checkAndUpdateScore();
+  }
+  else
+   showError();
+});
+
+field.addEventListener('keypress', (event) =>{
+  if(event.which === 13 || event.keyCode === 13) {
+    if(field.value.length){
+      hideError();
+      checkAndUpdateScore();
+    }
+    else
+      showError();
+  }
 })

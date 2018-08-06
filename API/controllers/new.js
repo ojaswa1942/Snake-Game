@@ -12,9 +12,9 @@ const newScore = (req, res, db) => {
     .returning('score')
     .then(score => {
       if(score)
-        res.status(200).json("Entry success");
+        res.status(200).json(score);
       else
-        res.json('Error');
+        res.json(0);
     })
     .catch(err => res.status(400).json('Something is wrong '+err));
 }
