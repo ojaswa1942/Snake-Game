@@ -28,12 +28,18 @@ let id = 0,
 //Can be used later to create gap b/w new snake blocks.
 //const sizeOfGrid = 30;
 const sizeOfObject = canvasElementsDim - 2;
+const snakeHead = new Image();
 
 const currentPos = {
   snakeX: "",
   snakeY: "",
   appleX: "",
   appleY: ""
+};
+const initSnakeHead = {
+  done: false,
+  x: "",
+  y: ""
 };
 
 const speed = {
@@ -93,7 +99,13 @@ const generateSnakeHead = () => {
   let yPos = Math.floor(Math.random() * yGridPositions()) * canvasElementsDim;
   currentPos.snakeX = xPos;
   currentPos.snakeY = yPos;
-  generateBlock(xPos, yPos, "green"); // setting different colors for dev purposed only
+  snakeHead.onload = function () {
+    ctx.drawImage(snakeHead, xPos+1, yPos+1, sizeOfObject, sizeOfObject);
+  }
+  initSnakeHead.x=xPos;
+  initSnakeHead.y=yPos;
+  snakeHead.src = "assets/img/snake/right.png";
+// generateBlock(xPos, yPos, "green"); // setting different colors for dev purposed only
 };
 
 const generateSnakeBody = () => {
@@ -207,11 +219,20 @@ const checkSnakeCollision = () => {
 
 const checkAndUpdatePositions = () => {
   if (speed.x || speed.y) {
+    // if(!initSnakeHead.done){
+      ctx.clearRect(
+      initSnakeHead.x + 0,
+      initSnakeHead.y + 0,
+      sizeOfObject+1,
+      sizeOfObject+1
+      );
+      // initSnakeHead.done = true;
+    // }
     ctx.clearRect(
-      currentPos.snakeX + 1,
-      currentPos.snakeY + 1,
-      sizeOfObject,
-      sizeOfObject
+      currentPos.snakeX + 0,
+      currentPos.snakeY + 0,
+      sizeOfObject+1,
+      sizeOfObject+1
     );
     if (pending) {
       generateSnakeBody();
@@ -221,8 +242,9 @@ const checkAndUpdatePositions = () => {
     }
     currentPos.snakeX += speed.x;
     currentPos.snakeY += speed.y;
-
-    generateBlock(currentPos.snakeX, currentPos.snakeY, "green");
+    ctx.drawImage(snakeHead, currentPos.snakeX+1, currentPos.snakeY+1, sizeOfObject, sizeOfObject);
+    snakeHead.src = `assets/img/snake/${direction}.png`;
+    // generateBlock(currentPos.snakeX, currentPos.snakeY, "green");
   }
 };
 
@@ -309,6 +331,7 @@ const moveUp = () => {
     speed.y = -canvasElementsDim;
     speed.x = 0;
     direction = "up";
+    snakeHead.src = "assets/img/snake/up.png";
   }
 };
 const moveDown = () => {
@@ -316,6 +339,7 @@ const moveDown = () => {
     speed.y = canvasElementsDim;
     speed.x = 0;
     direction = "down";
+    snakeHead.src = "assets/img/snake/down.png";
   }
 };
 const moveLeft = () => {
@@ -323,6 +347,7 @@ const moveLeft = () => {
     speed.y = 0;
     speed.x = -canvasElementsDim;
     direction = "left";
+    snakeHead.src = "assets/img/snake/left.png";
   }
 };
 const moveRight = () => {
@@ -330,6 +355,7 @@ const moveRight = () => {
     speed.y = 0;
     speed.x = canvasElementsDim;
     direction = "right";
+    snakeHead.src = "assets/img/snake/right.png";
   }
 };
 
